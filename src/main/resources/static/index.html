@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ATM Dashboard</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eaeaea;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 50px;
+        }
+
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 400px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 80%;
+            padding: 8px;
+            margin: 5px 0;
+        }
+
+        button {
+            padding: 8px 16px;
+            margin: 5px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>ATM Dashboard</h2>
+
+    <h3>Balance: ₹<span id="balance">Loading...</span></h3>
+
+    <input type="number" id="depositAmount" placeholder="Deposit Amount">
+    <button onclick="deposit()">Deposit</button>
+
+    <input type="number" id="withdrawAmount" placeholder="Withdraw Amount">
+    <button onclick="withdraw()">Withdraw</button>
+
+    <br><br>
+    <button onclick="logout()">Logout</button>
+</div>
+
+<script src="atm.js"></script>
+<script>
+    loadBalance();   
+</script>
+
+</body>
+</html>

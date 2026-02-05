@@ -1,0 +1,119 @@
+/* General body styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #eaeaea;
+    margin: 0;
+    padding: 0;
+}
+
+/* Centering login box */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Login box styles */
+.login-box {
+    background: white;
+    width: 320px;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.login-box h2 {
+    margin-bottom: 20px;
+    color: #2c3e50;
+}
+
+/* Input fields for login */
+.login-box input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+/* Buttons for login */
+.login-box button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 15px;
+    font-size: 16px;
+    background-color: #2980b9;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.login-box button:hover {
+    background-color: #1f6391;
+}
+
+/* Note under login */
+.login-box .note {
+    margin-top: 15px;
+    font-size: 12px;
+    color: gray;
+}
+
+/* ATM index page styles */
+.atm-box {
+    background: white;
+    width: 350px;
+    margin: 50px auto;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.atm-box h1 {
+    color: #2c3e50;
+}
+
+/* Balance display */
+#balance {
+    font-size: 20px;
+    margin: 15px 0;
+    font-weight: bold;
+}
+
+/* ATM input fields */
+.atm-box input[type="number"] {
+    width: 200px;
+    padding: 8px;
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+/* ATM buttons */
+.atm-box button {
+    padding: 10px 15px;
+    margin: 5px;
+    font-size: 15px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+}
+
+/* Specific button colors */
+.atm-box .deposit {
+    background-color: #27ae60;
+    color: white;
+}
+
+.atm-box .withdraw {
+    background-color: #c0392b;
+    color: white;
+}
+
+.atm-box .exit {
+    background-color: #34495e;
+    color: white;
+    width: 100%;
+    margin-top: 10px;
+}
