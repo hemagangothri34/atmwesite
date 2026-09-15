@@ -1,6 +1,7 @@
 package com.atm.atmwesite.model;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "transactions") 
@@ -12,6 +13,15 @@ public class Transaction {
 
     private String type;
     private double amount;
+    private double balanceAfter;
+
+    @Column(name = "reference_no")
+    private String referenceNo;
+
+    private String description;
+
+    @Column(name = "timestamp")
+    private LocalDateTime timestamp;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
@@ -19,13 +29,18 @@ public class Transaction {
 
     
     public Transaction() {
+        this.timestamp = LocalDateTime.now();
     }
 
     
-    public Transaction(double amount, User user, String type) {
+    public Transaction(double amount, User user, String type, double balanceAfter, String referenceNo, String description) {
         this.amount = amount;
         this.user = user;
         this.type = type;
+        this.balanceAfter = balanceAfter;
+        this.referenceNo = referenceNo;
+        this.description = description;
+        this.timestamp = LocalDateTime.now();
     }
 
     // ---------- getters & setters ----------
@@ -48,6 +63,38 @@ public class Transaction {
 
     public void setAmount(double amount) {
         this.amount = amount;
+    }
+
+    public double getBalanceAfter() {
+        return balanceAfter;
+    }
+
+    public void setBalanceAfter(double balanceAfter) {
+        this.balanceAfter = balanceAfter;
+    }
+
+    public String getReferenceNo() {
+        return referenceNo;
+    }
+
+    public void setReferenceNo(String referenceNo) {
+        this.referenceNo = referenceNo;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public LocalDateTime getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(LocalDateTime timestamp) {
+        this.timestamp = timestamp;
     }
 
     public User getUser() {

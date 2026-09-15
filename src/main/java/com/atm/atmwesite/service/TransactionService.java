@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class TransactionService {
@@ -18,18 +19,16 @@ public class TransactionService {
     @Autowired
     private UserRepository userRepository;
 
-    public void saveTransaction(Long userId, String type, double amount) {
-        User user = userRepository.findById(userId).orElseThrow();
+    public Transaction saveTransaction(Long userId, String type, double amount, double balanceAfter, String description) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
 
-        Transaction tx = new Transaction();
-        tx.setUser(user);
-        tx.setType(type);
-        tx.setAmount(amount);
+        String refNo = "TXN-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase();
 
-        transactionRepository.save(tx);
+        Transaction tx = new Transaction(amount, user, type, balanceAfter, refNo, description);
+        return transactionRepository.save(tx);
     }
 
     public List<Transaction> getTransactions(Long userId) {
-        return transactionRepository.findByUserId(userId);
+        return transactionRepository.findByUserIdOrderByTimestampDesc(userId);
     }
 }

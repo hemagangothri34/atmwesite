@@ -2,70 +2,55 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>ATM Login</title>
-
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #eaeaea;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        .login-box {
-            background: white;
-            width: 320px;
-            padding: 25px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.2);
-            text-align: center;
-        }
-
-        h2 {
-            margin-bottom: 20px;
-        }
-
-        input {
-            width: 90%;
-            padding: 10px;
-            margin: 8px 0;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-
-        button {
-            width: 95%;
-            padding: 10px;
-            margin-top: 15px;
-            background-color: #28a745;
-            border: none;
-            color: white;
-            font-size: 16px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #218838;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATM Terminal - Login</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="login-box">
-    <h2>ATM Login</h2>
+<div class="login-wrapper">
+    <div class="login-card-box">
+        <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 20px;">
+            <div class="brand-logo">₹</div>
+            <h2 style="color: var(--text-heading); margin: 0; font-size: 24px;">ATM <span style="color: var(--green-primary);">Terminal</span></h2>
+        </div>
+        
+        <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">Please insert your card details to access the ATM terminal</p>
 
-    <!-- MUST MATCH atm.js IDs -->
-    <input type="text" id="cardNumber" placeholder="Enter Card Number" required>
-    <input type="password" id="pin" placeholder="Enter PIN" required>
+        <div class="form-group" style="text-align: left;">
+            <label for="cardNumber">Debit Card Number</label>
+            <input type="text" id="cardNumber" placeholder="e.g. 1234567890" maxlength="16" required autocomplete="off">
+        </div>
 
-    <button onclick="login()">Login</button>
+        <div class="form-group" style="text-align: left;">
+            <label for="pin">ATM PIN (4-Digits)</label>
+            <input type="password" id="pin" placeholder="••••" maxlength="6" required autocomplete="off">
+        </div>
+
+        <button class="btn-action-green" onclick="login()" style="margin-top: 10px;">🔐 Insert Card & Login</button>
+
+        <div class="demo-account-pills">
+            <div class="demo-title">⚡ Quick Demo Accounts (Click to Autofill)</div>
+            <div class="demo-pill" onclick="autofillDemo('1234567890', '1234')">
+                <strong>Hema Gangothri</strong> (Card: <code>1234567890</code> | PIN: <code>1234</code>)
+            </div>
+            <div class="demo-pill" onclick="autofillDemo('9876543210', '4321')">
+                <strong>Manikanta Mattaparth</strong> (Card: <code>9876543210</code> | PIN: <code>4321</code>)
+            </div>
+        </div>
+    </div>
 </div>
 
-<!-- JS FILE -->
+<div id="toast" class="toast-msg"></div>
+
 <script src="atm.js"></script>
+<script>
+    function autofillDemo(card, pin) {
+        document.getElementById("cardNumber").value = card;
+        document.getElementById("pin").value = pin;
+        showToast("Autofilled credentials for card " + card);
+    }
+</script>
 
 </body>
 </html>
