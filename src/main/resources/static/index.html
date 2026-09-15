@@ -2,249 +2,66 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ATM Terminal - Dashboard</title>
-    <link rel="stylesheet" href="style.css">
+    <title>ATM Dashboard</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eaeaea;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 50px;
+        }
+
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            width: 400px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 80%;
+            padding: 8px;
+            margin: 5px 0;
+        }
+
+        button {
+            padding: 8px 16px;
+            margin: 5px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
 </head>
+
 <body>
 
-<!-- NAVBAR -->
-<div class="navbar">
-    <div class="brand">
-        <div class="brand-logo">₹</div>
-        <div class="brand-title">NATIONAL <span>BANK ATM</span></div>
-    </div>
-    <div class="user-status">
-        <div class="user-badge" id="userBadge">Customer: Loading...</div>
-        <button class="btn-logout" onclick="logout()">Eject Card / Exit</button>
-    </div>
+<div class="container">
+    <h2>ATM Dashboard</h2>
+
+    <h3>Balance: ₹<span id="balance">Loading...</span></h3>
+
+    <input type="number" id="depositAmount" placeholder="Deposit Amount">
+    <button onclick="deposit()">Deposit</button>
+
+    <input type="number" id="withdrawAmount" placeholder="Withdraw Amount">
+    <button onclick="withdraw()">Withdraw</button>
+
+    <br><br>
+    <button onclick="logout()">Logout</button>
 </div>
-
-<!-- ATM TERMINAL WRAPPER -->
-<div class="atm-container">
-
-    <!-- SIDEBAR: VIRTUAL CARD & HARDWARE KEYPAD -->
-    <div class="atm-hardware-panel">
-        
-        <!-- VIRTUAL DEBIT CARD -->
-        <div class="debit-card">
-            <div class="card-top">
-                <div class="card-bank">NATIONAL BANK</div>
-                <div class="card-chip"></div>
-            </div>
-            <div class="card-number" id="cardDisplay">•••• •••• •••• ••••</div>
-            <div class="card-bottom">
-                <div class="card-holder">
-                    CARD HOLDER
-                    <div id="cardHolderDisplay">VALUED CUSTOMER</div>
-                </div>
-                <div class="card-logo">VISA</div>
-            </div>
-        </div>
-
-        <!-- CARD SLOT ILLUMINATION -->
-        <div style="width: 100%; text-align: center;">
-            <div style="font-size: 11px; font-weight: 700; color: var(--text-muted); margin-bottom: 5px;">CARD SLOT</div>
-            <div class="card-slot">
-                <div class="card-slot-light"></div>
-            </div>
-        </div>
-
-        <!-- HARDWARE KEYPAD -->
-        <div style="width: 100%; text-align: center;">
-            <div class="keypad-title">Tactile ATM Keypad</div>
-            <div class="keypad-grid" style="margin-top: 10px;">
-                <button class="key-btn" onclick="pressKey('1')">1</button>
-                <button class="key-btn" onclick="pressKey('2')">2</button>
-                <button class="key-btn" onclick="pressKey('3')">3</button>
-                
-                <button class="key-btn" onclick="pressKey('4')">4</button>
-                <button class="key-btn" onclick="pressKey('5')">5</button>
-                <button class="key-btn" onclick="pressKey('6')">6</button>
-                
-                <button class="key-btn" onclick="pressKey('7')">7</button>
-                <button class="key-btn" onclick="pressKey('8')">8</button>
-                <button class="key-btn" onclick="pressKey('9')">9</button>
-                
-                <button class="key-btn clear" onclick="pressKey('CLEAR')">CLEAR</button>
-                <button class="key-btn" onclick="pressKey('0')">0</button>
-                <button class="key-btn enter" onclick="pressKey('ENTER')">ENTER</button>
-            </div>
-        </div>
-
-    </div>
-
-    <!-- MAIN ATM TERMINAL SCREEN -->
-    <div class="atm-screen-panel">
-        
-        <!-- NAVIGATION TABS -->
-        <div class="screen-tabs">
-            <button class="tab-btn active" onclick="switchTab('dashboard')">🏠 Main Screen</button>
-            <button class="tab-btn" onclick="switchTab('withdraw')">💵 Withdrawal</button>
-            <button class="tab-btn" onclick="switchTab('deposit')">📥 Deposit</button>
-            <button class="tab-btn" onclick="switchTab('transfer')">🔁 Fund Transfer</button>
-            <button class="tab-btn" onclick="switchTab('statement')">📜 Statement</button>
-            <button class="tab-btn" onclick="switchTab('pin')">🔒 Change PIN</button>
-        </div>
-
-        <!-- VIEW 1: DASHBOARD / OVERVIEW -->
-        <div id="view-dashboard" class="view-section active">
-            <div class="balance-card">
-                <div>
-                    <div class="balance-title">AVAILABLE ACCOUNT BALANCE</div>
-                    <div class="balance-amount">₹<span id="balance">0.00</span></div>
-                    <div style="font-size: 13px; margin-top: 5px; opacity: 0.8;" id="accountTypeDisplay">Savings Account</div>
-                </div>
-                <div class="balance-details">
-                    <div>Status: <span style="color: #2ecc71; font-weight: 700;" id="statusDisplay">ACTIVE</span></div>
-                    <div style="margin-top: 6px;" id="accountNumDisplay">ACC: Loading...</div>
-                    <button onclick="loadUserData()" style="margin-top: 10px; background: rgba(255,255,255,0.2); border: none; color: white; padding: 4px 10px; border-radius: 4px; cursor: pointer; font-size: 12px;">🔄 Refresh</button>
-                </div>
-            </div>
-
-            <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 15px; color: var(--text-heading);">⚡ Quick Cash Withdrawal</h3>
-            <div class="quick-grid">
-                <button class="preset-btn" onclick="quickWithdraw(500)">₹500</button>
-                <button class="preset-btn" onclick="quickWithdraw(1000)">₹1,000</button>
-                <button class="preset-btn" onclick="quickWithdraw(2000)">₹2,000</button>
-                <button class="preset-btn" onclick="quickWithdraw(5000)">₹5,000</button>
-            </div>
-        </div>
-
-        <!-- VIEW 2: WITHDRAWAL -->
-        <div id="view-withdraw" class="view-section">
-            <h3 style="margin-bottom: 15px; color: var(--text-heading);">Cash Withdrawal</h3>
-            <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">Select a preset amount or enter custom cash withdrawal amount.</p>
-            
-            <div class="quick-grid" style="margin-bottom: 20px;">
-                <button class="preset-btn" onclick="quickWithdraw(500)">₹500</button>
-                <button class="preset-btn" onclick="quickWithdraw(1000)">₹1,000</button>
-                <button class="preset-btn" onclick="quickWithdraw(2000)">₹2,000</button>
-                <button class="preset-btn" onclick="quickWithdraw(5000)">₹5,000</button>
-            </div>
-
-            <div class="form-group">
-                <label for="withdrawAmount">Custom Amount (₹)</label>
-                <input type="number" id="withdrawAmount" placeholder="Enter amount (e.g. 1500)" min="100" step="100">
-            </div>
-
-            <button class="btn-action-red" onclick="withdraw()">💸 Dispense Cash</button>
-        </div>
-
-        <!-- VIEW 3: DEPOSIT -->
-        <div id="view-deposit" class="view-section">
-            <h3 style="margin-bottom: 15px; color: var(--text-heading);">Cash Deposit</h3>
-            <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">Insert notes into the deposit slot or specify amount below.</p>
-
-            <div class="form-group">
-                <label for="depositAmount">Deposit Amount (₹)</label>
-                <input type="number" id="depositAmount" placeholder="Enter deposit amount (e.g. 2000)" min="100" step="100">
-            </div>
-
-            <button class="btn-action-green" onclick="deposit()">📥 Deposit Cash</button>
-        </div>
-
-        <!-- VIEW 4: FUND TRANSFER -->
-        <div id="view-transfer" class="view-section">
-            <h3 style="margin-bottom: 15px; color: var(--text-heading);">Transfer Funds to Card</h3>
-            <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">Direct card-to-card instant fund transfer.</p>
-
-            <div class="form-group">
-                <label for="targetCardNumber">Recipient Card Number</label>
-                <input type="text" id="targetCardNumber" placeholder="Enter 10-digit target card number (e.g. 9876543210)">
-            </div>
-
-            <div class="form-group">
-                <label for="transferAmount">Transfer Amount (₹)</label>
-                <input type="number" id="transferAmount" placeholder="Enter amount to transfer" min="1">
-            </div>
-
-            <button class="btn-action-blue" onclick="transfer()">🔁 Confirm Transfer</button>
-        </div>
-
-        <!-- VIEW 5: MINI-STATEMENT -->
-        <div id="view-statement" class="view-section">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                <h3 style="color: var(--text-heading); margin: 0;">Mini Statement & Transactions</h3>
-                <button onclick="loadTransactions()" style="background: #e2e8f0; border: none; padding: 6px 12px; border-radius: 4px; font-weight: 600; cursor: pointer; font-size: 13px;">🔄 Refresh List</button>
-            </div>
-
-            <div class="table-container">
-                <table class="txn-table">
-                    <thead>
-                        <tr>
-                            <th>Ref No</th>
-                            <th>Date & Time</th>
-                            <th>Type</th>
-                            <th>Description</th>
-                            <th>Amount</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody id="transactionsBody">
-                        <tr><td colspan="6" style="text-align: center; color: var(--text-muted);">Loading transactions...</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <!-- VIEW 6: PIN CHANGE -->
-        <div id="view-pin" class="view-section">
-            <h3 style="margin-bottom: 15px; color: var(--text-heading);">Change ATM Security PIN</h3>
-            <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 20px;">Ensure your new PIN is at least 4 digits and keep it confidential.</p>
-
-            <div class="form-group">
-                <label for="currentPin">Current PIN</label>
-                <input type="password" id="currentPin" placeholder="Enter current PIN" maxlength="6">
-            </div>
-
-            <div class="form-group">
-                <label for="newPin">New PIN</label>
-                <input type="password" id="newPin" placeholder="Enter new PIN" maxlength="6">
-            </div>
-
-            <div class="form-group">
-                <label for="confirmPin">Confirm New PIN</label>
-                <input type="password" id="confirmPin" placeholder="Re-enter new PIN" maxlength="6">
-            </div>
-
-            <button class="btn-action-green" onclick="changePin()">🔒 Update PIN</button>
-        </div>
-
-    </div>
-
-</div>
-
-<!-- PRINTABLE RECEIPT MODAL -->
-<div id="receiptModal" class="modal-overlay">
-    <div class="receipt-slip">
-        <div class="receipt-header">
-            <h3>NATIONAL BANK ATM</h3>
-            <div style="font-size: 11px; margin-top: 4px; color: #555;">TERMINAL #ATM-10492</div>
-            <div style="font-size: 11px; color: #555;" id="receiptDate">2026-09-15 21:15</div>
-        </div>
-        <div class="receipt-body">
-            <div><span>CUSTOMER:</span> <strong id="rCustomer">NATIONAL BANK USER</strong></div>
-            <div><span>CARD NO:</span> <strong id="rCard">**** **** **** 1234</strong></div>
-            <div><span>REF NO:</span> <strong id="rRef">TXN-00000000</strong></div>
-            <div><span>TXN TYPE:</span> <strong id="rType">WITHDRAWAL</strong></div>
-            <div><span>AMOUNT:</span> <strong id="rAmount">₹0.00</strong></div>
-            <div><span>NEW BALANCE:</span> <strong id="rBalance">₹0.00</strong></div>
-        </div>
-        <div class="receipt-footer">
-            <div>THANK YOU FOR BANKING WITH US</div>
-            <div>PLEASE TAKE YOUR RECEIPT</div>
-            <button class="btn-close-modal" onclick="closeReceipt()">Close Receipt</button>
-        </div>
-    </div>
-</div>
-
-<div id="toast" class="toast-msg"></div>
 
 <script src="atm.js"></script>
 <script>
-    loadUserData();
-    loadTransactions();
+    loadBalance();   
 </script>
 
 </body>
